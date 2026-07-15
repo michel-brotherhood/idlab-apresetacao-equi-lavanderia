@@ -1,34 +1,32 @@
-# BigSoccer by iSCOUT — Pitch para Colégios Privados
+# EQUI Lavanderia — Apresentação Corporativa
 
-Apresentação interativa (single-page deck) da oportunidade de parceria entre **BigSoccer + iSCOUT** e instituições de ensino privadas.
+Apresentação interativa (single-page deck) da EQUI Lavanderia — excelência, tecnologia e cuidado profissional para o enxoval de clientes corporativos e hoteleiros.
 
-> **Tagline:** Seu colégio, na vanguarda do esporte. Democratizando jornadas de sucesso no futebol de base.
->
-> **Go-to-market:** Agosto 2026
+> **Tagline:** Excelência, Tecnologia e Cuidado Profissional para o seu Enxoval.
 
 ## Stack
 
-HTML5 + CSS3 + JavaScript vanilla, single-file (`index.html`). Sem build, sem dependências externas. Ícones via SVG sprite inline (Lucide). Imagens otimizadas em WebP (~900 KB total).
+HTML5 + CSS3 + JavaScript vanilla, single-file (`index.html`). Sem build, sem dependências externas. Ícones via SVG sprite inline (estilo Lucide). Imagens otimizadas em WebP.
 
 ## Estrutura dos slides (11)
 
 | # | Seção | Conteúdo |
 |---|-------|----------|
-| 00 | Início | Capa + go-to-market |
-| 01 | O problema | 0,5% dos atletas de base; falta de oportunidade |
-| 02 | A solução | iSCOUT — plataforma com câmeras + IA proprietária |
-| 03 | Por que seu colégio | Público 10–16 anos, mercado educacional competitivo |
-| 04 | Credibilidade | Arena BigSoccer: 24+ anos, 10K alunos, 430+ engajados |
-| 05 | Tecnologia | Captura → Visão 3D → IA → App + Dashboard |
-| 06 | Para seu colégio | Colégio / Pais / Alunos / Professores + integração pedagógica |
-| 07 | Piloto | Metas 6 meses · MVP em Atibaia + 50 km |
-| 08 | Escola de vida | Desenvolvimento humano · Ambientes seguros · Famílias |
-| 09 | O convite | 5 ofertas concretas (piloto, presença, app, dashboard, marketing) |
-| 10 | Fechamento | CTA + contato |
+| 00 | Início | Capa + tagline |
+| 01 | Quem somos | Propósito, higienização corporativa e hoteleira |
+| 02 | Nossa missão | Revitalização de fibras, eliminação de patógenos, sustentabilidade |
+| 03 | Infraestrutura | Marcas parceiras: Electrolux Professional, Aggile Technology, Speed Union |
+| 04 | Electrolux myPRO | Inteligência e eficiência energética na lavagem |
+| 05 | Biossegurança | Sistema Stack Speed Union — desinfecção UV de nível hospitalar |
+| 06 | Secagem | Secagem de alta performance EC/33DS |
+| 07 | Acabamento | Calandra térmica AG1600 — acabamento premium |
+| 08 | Soluções e serviços | Hotelaria/pousadas e processamento individualizado de peças |
+| 09 | Clientes e parceiros | ID_Lab, ECOS, Integra, Lar de Idosos |
+| 10 | Contato | CTA + e-mail de contato |
 
 ## Rodar localmente
 
-Qualquer servidor estático serve. O projeto já tem `.claude/launch.json` configurado para `npx serve`:
+Qualquer servidor estático serve.
 
 ```bash
 npx serve -l 5500 .
@@ -53,16 +51,16 @@ npx serve -l 5500 .
 ## Estrutura
 
 ```
-escolas-privadas/
 ├── index.html                    # Deck completo (single-file)
 ├── README.md
+├── conteudo_apresentacao.docx    # Briefing de conteúdo original
 ├── assets/
-│   ├── big-soccer-logo.webp      # Logo
-│   ├── 09-favicon.webp           # Favicon
-│   └── 01-07-hero-*.webp         # Backgrounds dos slides
-└── .claude/launch.json           # Config do dev server
+│   ├── equi-logo.webp            # Logo
+│   ├── equi-01-hero.webp         # Loja / recepção
+│   ├── equi-02-planta.webp       # Vista geral do parque industrial
+│   ├── equi-03-recepcao.webp     # Calandra / acabamento
+│   ├── equi-04-mypro.webp        # Lavadora Electrolux myPRO
+│   └── equi-05-speedunion.webp   # Secadora Speed Union EC/33DS
+├── screenshot-slides.js          # Script Playwright para capturas de tela
+└── verify-slides.js              # Script Playwright para checagem de overflow/layout
 ```
-
-## Briefing
-
-O conteúdo é fiel ao documento de briefing `iscout_pitch_colégios_copy_only.docx` (não versionado — local apenas).
