@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects — https://developers.cloudflare.com/pages/configuration/redirects/
+# Deck de página única: qualquer caminho não encontrado cai de volta no index.
+/*  /index.html  200
