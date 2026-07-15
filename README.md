@@ -55,7 +55,7 @@ npx serve -l 5500 .
 ├── README.md
 ├── conteudo_apresentacao.docx    # Briefing de conteúdo original
 ├── assets/
-│   ├── equi-logo.webp            # Logo
+│   ├── equi-logo-3d.webp         # Logo (render 3D, fundo transparente)
 │   ├── equi-01-hero.webp         # Loja / recepção
 │   ├── equi-02-planta.webp       # Vista geral do parque industrial
 │   ├── equi-03-recepcao.webp     # Calandra / acabamento

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EQUI Lavanderia — Apresentação Corporativa</title>
-<link rel="icon" href="assets/equi-logo.webp" type="image/webp">
+<link rel="icon" href="assets/equi-logo-3d.webp" type="image/webp">
 <meta name="description" content="Excelência, tecnologia e cuidado profissional para o seu enxoval. Conheça a infraestrutura, a tecnologia europeia e as soluções da EQUI Lavanderia para hotelaria, pousadas e instituições.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +29,8 @@
   .ai, .slide, .progress-fill { transition: none !important; }
   .particle { animation: none !important; }
   .slide.active .hero-bg { animation: none !important; }
+  .logo-3d, .pcard-icon, .benefit-num .ico, .phase-num .ico,
+  .step-num, .step-title .ico { animation: none !important; }
 }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,9 +122,9 @@ body {
   100%{ transform: translateY(-110vh) scale(1.2); opacity: 0; }
 }
 
-/* ── LOGO PLATE ───────────────────────────────────────── */
-.logo-plate { background: #ffffff; border-radius: 16px; padding: 12px 26px; display: inline-flex; align-items: center; box-shadow: 0 18px 44px rgba(0,0,0,0.35); }
-.logo-plate img { display: block; height: 44px; width: auto; }
+/* ── LOGO ─────────────────────────────────────────────── */
+.logo-3d { display: block; height: 84px; width: auto; filter: drop-shadow(0 14px 26px rgba(0,0,0,0.55)); animation: logoFloat 4.5s ease-in-out infinite; }
+@keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 
 /* ── META CHIP ────────────────────────────────────────── */
 .meta-row { display: flex; gap: 10px; margin-top: 28px; align-items: center; justify-content: center; flex-wrap: wrap; }
@@ -227,9 +229,13 @@ body {
 
 .fs-btn { background: var(--surface); border: 1px solid var(--border); color: var(--dim); font-size: 0.85rem; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
 .fs-btn:hover { color: var(--bright); border-color: var(--slide-accent); }
+.fs-btn .ico { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); }
+.fs-btn:hover .ico { transform: rotate(90deg) scale(1.15); }
 
 .contact-link { display: inline-flex; align-items: center; gap: 10px; color: var(--bright); font-size: clamp(1.1rem,2vw,1.35rem); font-weight: 700; text-decoration: none; border-bottom: 1px solid color-mix(in srgb,var(--slide-accent) 45%,transparent); padding-bottom: 3px; transition: color .2s, border-color .2s; }
 .contact-link:hover { color: var(--electric); border-color: var(--electric); }
+.contact-link .ico { transition: transform 0.3s cubic-bezier(.34,1.56,.64,1); }
+.contact-link:hover .ico { transform: translateY(-2px) rotate(-8deg) scale(1.1); }
 
 /* ── RESPONSIVE ───────────────────────────────────────── */
 @media (max-height:820px) {
@@ -286,10 +292,20 @@ body {
   0%, 100% { filter: drop-shadow(0 0 3px currentColor); }
   50%       { filter: drop-shadow(0 0 12px currentColor); opacity: 0.8; }
 }
-.ai.in .pcard-icon  { animation: iconPop 0.55s cubic-bezier(.34,1.56,.64,1) both 0.08s; }
-.ai.in .step-num    { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
-.ai.in .benefit-num { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
-.pcard:hover .pcard-icon { filter: drop-shadow(0 0 8px currentColor); transition: filter 0.3s; }
+.ai.in .pcard-icon      { animation: iconPop 0.55s cubic-bezier(.34,1.56,.64,1) both 0.08s; }
+.ai.in .step-num        { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
+.ai.in .benefit-num     { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
+.ai.in .step-title .ico { animation: iconPop 0.4s cubic-bezier(.34,1.56,.64,1) both 0.18s; }
+
+/* Idle glow once a slide's icons have popped in — gives category/step icons a
+   subtle heartbeat instead of sitting fully static for the rest of the slide. */
+.slide.active .pcard-icon,
+.slide.active .benefit-num .ico,
+.slide.active .phase-num .ico {
+  animation: iconGlow 2.6s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+.pcard:hover .pcard-icon { animation-play-state: paused; filter: drop-shadow(0 0 8px currentColor); transition: filter 0.3s; }
 .step:hover .step-num { box-shadow: 0 0 0 4px color-mix(in srgb, var(--slide-accent) 28%, transparent); transition: box-shadow 0.25s; }
 
 @keyframes fadeSlideUp {
@@ -344,8 +360,8 @@ body {
     <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.80) 0%,rgba(4,9,26,0.68) 30%,rgba(4,9,26,0.94) 100%)"></div>
     <div class="particles-bg" id="coverParticles"></div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:1000px;">
-      <div class="ai logo-plate" style="--d:.1s;margin-bottom:clamp(20px,3.5vh,40px);">
-        <img src="assets/equi-logo.webp" alt="EQUI Lavanderia">
+      <div class="ai" style="--d:.1s;margin-bottom:clamp(20px,3.5vh,40px);">
+        <img class="logo-3d" src="assets/equi-logo-3d.webp" alt="EQUI Lavanderia">
       </div>
       <div class="ai" style="--d:.22s;font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,8.5vw,8rem);line-height:0.95;letter-spacing:0.04em;margin-bottom:10px;">
         <span style="color:#ffffff;">Excelência, Tecnologia</span><br><span style="color:#22abe2;text-shadow:0 0 70px rgba(34,171,226,0.45);">e Cuidado Profissional</span>
@@ -663,14 +679,14 @@ body {
     <img class="hero-bg" src="assets/equi-01-hero.webp" alt="EQUI Lavanderia" loading="lazy">
     <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.88) 0%,rgba(4,9,26,0.82) 45%,rgba(4,9,26,0.97) 100%)"></div>
     <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:820px;">
-      <div class="ai logo-plate" style="--d:.05s;margin-bottom:22px;">
-        <img src="assets/equi-logo.webp" alt="EQUI Lavanderia">
+      <div class="ai" style="--d:.05s;margin-bottom:22px;">
+        <img class="logo-3d" src="assets/equi-logo-3d.webp" alt="EQUI Lavanderia">
       </div>
       <div class="kicker ai" style="--d:.14s">Contato</div>
       <h2 class="headline ai wide" style="--d:.20s;">Conheça o padrão <span class="accent">EQUI</span> de qualidade.</h2>
       <div class="subline ai" style="--d:.28s;margin-bottom:20px;">Agende uma visita ou solicite uma proposta dimensionada exclusivamente para o seu negócio.</div>
-      <a class="contact-link ai" style="--d:.36s" href="mailto:equilavanderia@gmail.com">
-        <svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> equilavanderia@gmail.com
+      <a class="contact-link ai" style="--d:.36s" href="mailto:contato@equilavanderia.com.br">
+        <svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> contato@equilavanderia.com.br
       </a>
     </div>
   </div>
