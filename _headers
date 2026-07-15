@@ -1,0 +1,17 @@
+# Cloudflare Pages headers — https://developers.cloudflare.com/pages/configuration/headers/
+
+# HTML: sempre revalidar para que atualizações do deck apareçam na hora
+/
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Assets com nome de arquivo estável (equi-01-hero.webp etc.): cache longo e imutável.
+# Se o conteúdo de uma imagem mudar, renomeie o arquivo para invalidar o cache.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
