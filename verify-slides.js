@@ -12,12 +12,6 @@ const VIEWPORTS = [
   { name: 'notebook', width: 1366, height: 768 },
 ];
 
-const SLIDE_SECTIONS = [
-  'INÍCIO', 'O PROBLEMA', 'A SOLUÇÃO', 'POR QUE O CACHORRÃO',
-  'CREDIBILIDADE', 'TECNOLOGIA', 'PARA O CLUBE',
-  'IMPACTO ESG', 'ESCOLA DE VIDA', 'O CONVITE', 'FECHAMENTO'
-];
-
 (async () => {
   const browser = await chromium.launch({ headless: true });
   const report = [];
