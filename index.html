@@ -260,32 +260,39 @@ body {
 /* Below ~960px, columns stack and content routinely runs taller than the
    viewport (same trigger point as the phase-grid collapse above), so
    scrolling needs to be on wherever that happens — not just on phones.
-   padding-bottom clears the dots nav: up to 2 wrapped rows (~90px) + 12px
-   offset + margin. */
+   `safe center` keeps short slides (e.g. the cover) vertically centered
+   like on desktop, but falls back to top-aligned + scrollable instead of
+   clipping content once it no longer fits — plain `center` would crop the
+   top on overflow. padding-bottom clears the dots nav: up to 2 wrapped
+   rows (~90px) + 12px offset + margin; narrower breakpoints below drop the
+   dots entirely and shrink this back down. */
 @media (max-width:960px), (max-height:560px) {
   .slide {
     overflow-y: auto;
     overflow-x: hidden;
-    justify-content: flex-start;
+    justify-content: safe center;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 118px;
   }
 }
 @media (max-width:768px) {
-  .slide { padding-top: 40px; padding-left: 22px; padding-right: 22px; }
+  .slide { padding-top: 40px; padding-left: 22px; padding-right: 22px; padding-bottom: 32px; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .hub-grid { grid-template-columns: 1fr; }
   .split-slide { flex-direction: column; }
   .split-right { flex: 0 0 auto; width: 100%; max-width: 360px; align-self: center; }
   .split-img { min-height: 180px; height: 180px; }
   .split-left .headline { text-align: center; }
-  /* Nav arrows overlap slide content once cards run edge-to-edge on touch
-     screens; swipe, the dots and arrow keys already cover navigation. */
-  .nav-arrow { display: none; }
+  /* Touch nav (swipe, tap-to-advance via the arrow keys/counter) covers
+     mobile, and both chrome elements caused real layout bugs at this size
+     (arrows sitting on top of edge-to-edge cards, dots wrapping and
+     covering content) — simplest fix is to not show either on phones. */
+  .nav-arrow, .dots { display: none; }
 }
 @media (max-width:480px) {
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .slide { padding-top: 60px; padding-left: 14px; padding-right: 14px; }
+  .cover-title { font-size: clamp(2.2rem,9.5vw,3.2rem) !important; }
 }
 
 /* ── ICONS ────────────────────────────────────────────── */
@@ -373,7 +380,7 @@ body {
       <div class="ai" style="--d:.1s;margin-bottom:clamp(20px,3.5vh,40px);">
         <img class="logo-3d" src="assets/equi-logo-3d.webp" alt="EQUI Lavanderia">
       </div>
-      <div class="ai" style="--d:.22s;font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,8.5vw,8rem);line-height:0.95;letter-spacing:0.04em;margin-bottom:10px;">
+      <div class="ai cover-title" style="--d:.22s;font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,8.5vw,8rem);line-height:0.95;letter-spacing:0.04em;margin-bottom:10px;">
         <span style="color:#ffffff;">Excelência, Tecnologia</span><br><span style="color:#22abe2;text-shadow:0 0 70px rgba(34,171,226,0.45);">e Cuidado Profissional</span>
       </div>
       <div class="ai" style="--d:.32s;font-size:clamp(1.1rem,2.3vw,1.5rem);color:rgba(204,224,245,0.9);line-height:1.6;max-width:620px;font-weight:300;margin-bottom:clamp(14px,2.8vh,24px);">para o seu <strong style="color:#fff;font-weight:700;">enxoval.</strong></div>
