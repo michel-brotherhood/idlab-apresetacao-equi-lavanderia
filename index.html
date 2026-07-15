@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positivo Experience by iSCOUT — Parceria Estratégica</title>
+<link rel="icon" href="logo-iscout.webp" type="image/webp">
+<meta name="description" content="Tecnologia brasileira para enxergar o futuro do futebol antes de todo mundo. Positivo × iSCOUT — infraestrutura nacional de inteligência para o futebol de base.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #04091a;
+  --surface:  #080f22;
+  --surface2: #0c1830;
+  --border:   rgba(56,189,248,0.13);
+  --text:     #cce0f5;
+  --dim:      #527090;
+  --bright:   #ffffff;
+  --blue:     #0060f0;
+  --electric: #38bdf8;
+  --green:    #22c55e;
+  --amber:    #f59e0b;
+  --slide-accent: #0060f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none !important; }
+  .ai, .slide, .progress-fill { transition: none !important; }
+  .particle { animation: none !important; }
+  .slide.active .hero-bg { animation: none !important; }
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+/* ── ORBS ─────────────────────────────────────────────── */
+.orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; transition: background 1.6s cubic-bezier(.4,0,.2,1); }
+.orb-a { width: 700px; height: 700px; opacity: 0.09; top: -200px; left: -150px; animation: floatA 14s ease-in-out infinite; }
+.orb-b { width: 600px; height: 600px; opacity: 0.06; bottom: -150px; right: -120px; animation: floatB 17s ease-in-out infinite; }
+.orb-c { width: 400px; height: 400px; opacity: 0.04; top: 40%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, var(--electric), transparent 70%); animation: floatC 11s ease-in-out infinite; }
+@keyframes floatA { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(50px,70px) scale(1.05)} 66%{transform:translate(-35px,35px) scale(0.97)} }
+@keyframes floatB { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-60px,-50px) scale(1.08)} }
+@keyframes floatC { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-58%) scale(1.12)} }
+
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(56,189,248,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.022) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* ── DECK & SLIDES ────────────────────────────────────── */
+.deck { position: fixed; inset: 0; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: clamp(28px,4.5vh,60px) clamp(40px,5vw,80px);
+  opacity: 0; pointer-events: none;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(.4,0,.2,1), transform 0.55s cubic-bezier(.4,0,.2,1);
+}
+.slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+.slide.exit { opacity: 0; transform: translateY(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.ai { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.ai.in { opacity: 1; transform: translateY(0); }
+
+/* ── TYPOGRAPHY ───────────────────────────────────────── */
+.kicker {
+  font-size: 0.82rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--green); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.kicker::before, .kicker::after { content: ''; flex: 0 0 22px; height: 1px; background: var(--green); opacity: 0.45; }
+
+.headline {
+  font-size: clamp(1.9rem,4.8vw,3.6rem);
+  font-weight: 800; color: var(--bright);
+  letter-spacing: -0.03em; line-height: 1.1;
+  text-align: center; margin-bottom: 18px; max-width: 20ch;
+  text-wrap: balance; hyphens: manual;
+}
+.headline.wide { max-width: 26ch; }
+.headline .accent { color: var(--slide-accent); }
+
+.subline {
+  font-size: clamp(1.2rem,2.1vw,1.45rem);
+  color: var(--text); text-align: center;
+  max-width: 62ch; line-height: 1.7; margin-bottom: 24px;
+  text-wrap: pretty;
+  text-shadow: 0 1px 10px rgba(4,9,26,0.65);
+}
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; max-width: 860px; width: 100%; }
+.card.glow { border-color: color-mix(in srgb,var(--slide-accent) 28%,transparent); box-shadow: 0 0 48px color-mix(in srgb,var(--slide-accent) 6%,transparent); }
+
+.divider { width: 56px; height: 3px; border-radius: 2px; background: var(--slide-accent); margin: 18px auto; opacity: 0.65; }
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+.slide.active img.hero-bg { animation: kenburns 24s ease-in-out infinite alternate; }
+@keyframes kenburns { 0%{transform:scale(1) translate(0,0)} 100%{transform:scale(1.07) translate(-1%,0.8%)} }
+.hero-overlay { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ── PARTICLES ────────────────────────────────────────── */
+.particles-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.particle { position: absolute; bottom: -10px; border-radius: 50%; pointer-events: none; animation: particleRise linear infinite; }
+@keyframes particleRise {
+  0%  { transform: translateY(0) scale(0.6); opacity: 0; }
+  8%  { opacity: 1; }
+  92% { opacity: 0.7; }
+  100%{ transform: translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
+
+/* ── META CHIP ────────────────────────────────────────── */
+.meta-row { display: flex; gap: 10px; margin-top: 28px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.meta-chip { font-size: 0.73rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 5px 15px; border-radius: 100px; }
+
+/* ── CARDS GRID ───────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; width: 100%; }
+
+.pcard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 18px;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.pcard:hover { border-color: color-mix(in srgb,var(--slide-accent) 35%,transparent); background: var(--surface2); transform: translateY(-2px); }
+.pcard-icon  { font-size: 1.3rem; margin-bottom: 8px; }
+.pcard-title { font-size: 1.05rem; font-weight: 700; color: var(--bright); margin-bottom: 5px; }
+.pcard-desc  { font-size: 1.12rem; color: var(--text); line-height: 1.6; }
+
+/* ── STEPS ────────────────────────────────────────────── */
+.steps { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 680px; }
+.step { display: flex; align-items: flex-start; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; transition: transform .2s, border-color .2s; }
+.step:hover { transform: translateX(4px); border-color: color-mix(in srgb,var(--slide-accent) 38%,transparent); }
+.step-num { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; border: 2px solid var(--slide-accent); color: var(--slide-accent); }
+.step-title { font-size: 1.05rem; font-weight: 700; color: var(--bright); margin-bottom: 3px; }
+.step-desc  { font-size: 1.12rem; color: var(--text); line-height: 1.6; }
+
+/* ── SPLIT LAYOUT ─────────────────────────────────────── */
+.split-slide { display: flex; flex-direction: row; align-items: center; gap: clamp(22px,4vw,52px); max-width: 1040px; width: 100%; position: relative; z-index: 1; }
+.split-left  { flex: 1; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.split-left .headline { text-align: left; }
+.split-left .subline  { text-align: left; }
+.split-right { flex: 0 0 clamp(190px,26vw,320px); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 48px rgba(0,96,240,0.1); border: 1px solid rgba(56,189,248,0.1); align-self: stretch; }
+.split-img   { width: 100%; height: 100%; min-height: clamp(240px,36vw,480px); object-fit: cover; display: block; }
+
+/* ── ROLE COLUMNS ─────────────────────────────────────── */
+.role-wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: start; max-width: 860px; width: 100%; }
+.role-col { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.role-col.iscout   { border-color: rgba(56,189,248,0.22); }
+.role-col.positivo { border-color: rgba(0,96,240,0.30); }
+.role-divider { display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: rgba(255,255,255,0.18); font-weight: 300; }
+.role-label { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.role-item { display: flex; align-items: flex-start; gap: 8px; font-size: 1.08rem; color: var(--text); padding: 4px 0; line-height: 1.5; }
+.role-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slide-accent); flex-shrink: 0; margin-top: 8px; }
+
+/* ── COMPARE ──────────────────────────────────────────── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 860px; width: 100%; }
+.compare-col { border-radius: 12px; padding: 18px 20px; }
+.compare-col.old { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); }
+.compare-col.new { background: rgba(0,96,240,0.07); border: 1px solid rgba(0,96,240,0.22); }
+.compare-label { font-size: 0.71rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 11px; }
+.compare-label.neg { color: rgba(200,210,230,0.55); }
+.compare-label.pos { color: var(--electric); }
+.compare-item { display: flex; align-items: flex-start; gap: 7px; font-size: 1.08rem; color: var(--text); padding: 5px 0; line-height: 1.5; }
+.compare-item .ci { flex-shrink: 0; margin-top: 1px; font-size: 1.08rem; }
+
+/* ── HUB ITEMS ────────────────────────────────────────── */
+.hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; max-width: 580px; width: 100%; }
+.hub-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
+.hub-val   { font-size: 1.35rem; font-weight: 900; color: var(--slide-accent); font-family: 'SF Mono','Fira Code',monospace; min-width: 52px; }
+.hub-label { font-size: 1.08rem; color: var(--text); line-height: 1.3; }
+
+/* ── METRIC GROUPS ────────────────────────────────────── */
+.metric-group { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.metric-group-title { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: var(--slide-accent); margin-bottom: 9px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+.metric-item { font-size: 1.05rem; color: var(--text); padding: 4px 0; line-height: 1.45; }
+.metric-item::before { content: '→ '; color: var(--slide-accent); font-weight: 700; }
+
+/* ── PHASES ───────────────────────────────────────────── */
+.phase-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 980px; width: 100%; }
+.phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; transition: transform .2s, border-color .2s; }
+.phase-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb,var(--slide-accent) 38%,transparent); }
+.phase-num   { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 6px; }
+.phase-title { font-size: 1.22rem; font-weight: 800; color: var(--bright); margin-bottom: 12px; line-height: 1.2; }
+.phase-item  { font-size: 1.05rem; color: var(--text); padding: 3px 0; line-height: 1.45; }
+.phase-item::before { content: '· '; font-weight: 700; }
+
+/* ── FLYWHEEL ─────────────────────────────────────────── */
+.flywheel { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+.fly-step  { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; transition: border-color .18s, background .18s; }
+.fly-step:hover { border-color: color-mix(in srgb,var(--slide-accent) 35%,transparent); background: var(--surface2); }
+.fly-icon  { font-size: 1.2rem; flex-shrink: 0; width: 28px; text-align: center; }
+.fly-text  { font-size: 1.08rem; color: var(--text); flex: 1; }
+.fly-arrow { text-align: center; color: var(--dim); font-size: 0.78rem; padding: 0; }
+
+/* ── BENEFITS ─────────────────────────────────────────── */
+.benefit-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 15px 18px; display: flex; align-items: flex-start; gap: 12px; transition: border-color .2s, transform .2s; }
+.benefit-card:hover { border-color: color-mix(in srgb,var(--slide-accent) 32%,transparent); transform: translateX(3px); }
+.benefit-num   { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; border: 1.5px solid var(--slide-accent); color: var(--slide-accent); margin-top: 1px; }
+.benefit-title { font-size: 1.08rem; font-weight: 700; color: var(--bright); margin-bottom: 3px; }
+.benefit-desc  { font-size: 1.12rem; color: var(--text); line-height: 1.58; }
+
+/* ── CHROME ───────────────────────────────────────────── */
+.nav-arrow {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  z-index: 100; background: transparent; border: none;
+  color: rgba(255,255,255,0.25); font-size: 2rem; width: 52px; height: 52px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: color 0.2s ease, transform 0.2s cubic-bezier(.34,1.56,.64,1);
+  user-select: none; padding: 0;
+}
+.nav-arrow:hover { color: var(--bright); }
+.nav-prev:hover  { transform: translateY(-50%) translateX(-3px); }
+.nav-next:hover  { transform: translateY(-50%) translateX(3px); }
+.nav-arrow:focus-visible { outline: 2px solid var(--slide-accent); outline-offset: 4px; border-radius: 50%; color: var(--bright); }
+.nav-arrow.disabled { opacity: 0.10; cursor: default; pointer-events: none; }
+.nav-prev { left: 16px; }
+.nav-next { right: 16px; }
+
+.progress-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.04); z-index: 100; }
+.progress-fill { height: 100%; width: 0%; transition: width 0.5s ease, background 0.6s ease; }
+
+.dots { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 2px; z-index: 100; flex-wrap: wrap; justify-content: center; max-width: 90vw; }
+.dot { width: 44px; height: 44px; border-radius: 50%; background: transparent; cursor: pointer; transition: transform 0.3s; border: none; padding: 0; display: flex; align-items: center; justify-content: center; }
+.dot::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.13); transition: background 0.3s, transform 0.3s; }
+.dot.active::before { background: var(--slide-accent); transform: scale(1.5); }
+.dot:hover:not(.active)::before { background: rgba(255,255,255,0.32); }
+.dot:focus-visible { outline: 2px solid var(--slide-accent); outline-offset: -2px; border-radius: 50%; }
+
+.counter { font-size: 0.65rem; font-weight: 700; color: var(--dim); font-family: 'SF Mono','Fira Code',monospace; letter-spacing: 0.08em; }
+.counter .cur { color: var(--slide-accent); transition: color 0.5s ease; }
+
+.top-right   { position: fixed; top: 14px; right: 24px; z-index: 100; display: flex; align-items: center; gap: 14px; height: 34px; }
+.section-tag { display: none; }
+
+.fs-btn { background: var(--surface); border: 1px solid var(--border); color: var(--dim); font-size: 0.85rem; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+.fs-btn:hover { color: var(--bright); border-color: var(--slide-accent); }
+
+
+.restart-btn { background: transparent; border: 1px solid color-mix(in srgb,var(--slide-accent) 38%,transparent); color: var(--slide-accent); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; padding: 7px 18px; border-radius: 100px; cursor: pointer; transition: all .2s; }
+.restart-btn:hover { background: color-mix(in srgb,var(--slide-accent) 10%,transparent); border-color: var(--slide-accent); }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-height:820px) {
+  .kicker { margin-bottom: 8px; font-size: 0.74rem; }
+  .headline { margin-bottom: 10px; font-size: clamp(1.4rem,3vw,2.2rem) !important; }
+  .subline { margin-bottom: 12px; font-size: 1.05rem; line-height: 1.5; }
+  .card { padding: 11px 16px; }
+  .pcard, .metric-group, .hub-item, .fly-step, .step, .benefit-card, .phase-card { padding: 9px 13px !important; }
+  .grid-2, .grid-3, .grid-4 { gap: 7px; }
+  .role-col { padding: 12px 14px; }
+  .compare-col { padding: 12px 14px; }
+}
+@media (max-height:700px) {
+  .headline { font-size: clamp(1.3rem,2.8vw,1.9rem) !important; margin-bottom: 8px; }
+  .subline { margin-bottom: 10px; font-size: 0.98rem; }
+}
+@media (max-width:960px) {
+  .phase-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .role-wrap { grid-template-columns: 1fr; }
+  .role-divider { display: none; }
+}
+@media (max-width:768px) {
+  .slide { padding: 40px 22px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .hub-grid { grid-template-columns: 1fr; }
+  .split-slide { flex-direction: column; }
+  .split-right { flex: 0 0 auto; width: 100%; max-width: 360px; align-self: center; }
+  .split-img { min-height: 180px; height: 180px; }
+  .split-left .headline { text-align: center; }
+  .nav-prev { left: 8px; }
+  .nav-next { right: 8px; }
+}
+@media (max-width:480px) {
+  .slide {
+    padding: 60px 14px 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .slide-inner-row { flex-direction: column !important; }
+  .flywheel-col { flex: 0 0 auto !important; width: 100%; }
+  .benefits-col-right { padding-top: 0 !important; }
+}
+
+/* ── VIRADA LAYOUT (split headline + cards grid) ────────── */
+.virada-layout {
+  display: flex; flex-direction: row; gap: clamp(18px,3.5vw,48px);
+  align-items: center; width: 100%; max-width: 1080px;
+  position: relative; z-index: 1;
+}
+.virada-left {
+  flex: 0 0 clamp(220px,27vw,330px);
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+.virada-right {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+  gap: 7px; min-width: 0;
+}
+@media (max-width: 860px) {
+  .virada-layout { flex-direction: column; }
+  .virada-left { flex: none; width: 100%; align-items: center; }
+  .virada-left .headline { text-align: center; }
+  .virada-left .subline  { text-align: center; }
+  .virada-right { width: 100%; }
+}
+
+/* ── ICONS ────────────────────────────────────────────── */
+.ico { width: 1em; height: 1em; display: inline-block; vertical-align: -0.13em; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; overflow: visible; }
+.ico-solid { fill: currentColor; stroke: none; }
+
+/* ── ICON ANIMATIONS ──────────────────────────────────── */
+@keyframes iconPop {
+  0%   { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+  65%  { transform: scale(1.2) rotate(4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes iconGlow {
+  0%, 100% { filter: drop-shadow(0 0 3px currentColor); }
+  50%       { filter: drop-shadow(0 0 12px currentColor); opacity: 0.8; }
+}
+.ai.in .pcard-icon  { animation: iconPop 0.55s cubic-bezier(.34,1.56,.64,1) both 0.08s; }
+.ai.in .step-num    { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
+.ai.in .benefit-num { animation: iconPop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.06s; }
+.pcard:hover .pcard-icon { filter: drop-shadow(0 0 8px currentColor); transition: filter 0.3s; }
+.step:hover .step-num { box-shadow: 0 0 0 4px color-mix(in srgb, var(--slide-accent) 28%, transparent); transition: box-shadow 0.25s; }
+.slide.active .fly-icon { animation: iconGlow 2.4s ease-in-out infinite; }
+.slide.active .flywheel .fly-step:nth-child(1)  .fly-icon { animation-delay: 0s; }
+.slide.active .flywheel .fly-step:nth-child(3)  .fly-icon { animation-delay: 0.34s; }
+.slide.active .flywheel .fly-step:nth-child(5)  .fly-icon { animation-delay: 0.68s; }
+.slide.active .flywheel .fly-step:nth-child(7)  .fly-icon { animation-delay: 1.02s; }
+.slide.active .flywheel .fly-step:nth-child(9)  .fly-icon { animation-delay: 1.36s; }
+.slide.active .flywheel .fly-step:nth-child(11) .fly-icon { animation-delay: 1.7s; }
+.slide.active .flywheel .fly-step:nth-child(13) .fly-icon { animation-delay: 2.04s; }
+
+@keyframes fadeSlideUp {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.phase-card .phase-num,
+.phase-card .phase-title,
+.phase-card .phase-item { opacity: 0; }
+.phase-card.in .phase-num   { animation: iconPop 0.4s cubic-bezier(.34,1.56,.64,1) both 0.05s; }
+.phase-card.in .phase-title { animation: fadeSlideUp 0.38s ease both 0.1s; }
+.phase-card.in .phase-item:nth-child(3) { animation: fadeSlideUp 0.32s ease both 0.16s; }
+.phase-card.in .phase-item:nth-child(4) { animation: fadeSlideUp 0.32s ease both 0.24s; }
+.phase-card.in .phase-item:nth-child(5) { animation: fadeSlideUp 0.32s ease both 0.32s; }
+.phase-card.in .phase-item:nth-child(6) { animation: fadeSlideUp 0.32s ease both 0.40s; }
+.phase-card.in .phase-item:nth-child(7) { animation: fadeSlideUp 0.32s ease both 0.48s; }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+<symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></symbol>
+<symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-bar-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.94 14.5A2 2 0 0 0 8.5 13.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 8.94A2 2 0 0 0 9.94 7.5l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13A2 2 0 0 0 15.5 8.94l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-newspaper" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></symbol>
+<symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
+<symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+<symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+</svg>
+
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+<div class="orb orb-c"></div>
+<div class="grid-bg"></div>
+
+<div class="top-right">
+  <div class="counter"><span class="cur" id="cur">01</span> / <span id="tot"></span></div>
+  <button class="fs-btn" onclick="toggleFS()" title="Tela cheia (F)"><svg class="ico" aria-hidden="true"><use href="#i-fullscreen"/></svg></button>
+</div>
+<div class="section-tag" id="sectag"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 00 — CAPA ─────────────────────────────────────────── -->
+  <div class="slide active" data-accent="#0060f0" data-section="INÍCIO">
+    <video class="hero-bg" src="vidoe entrada.mp4" autoplay muted loop playsinline></video>
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.72) 0%,rgba(4,9,26,0.60) 30%,rgba(4,9,26,0.90) 100%)"></div>
+    <div class="particles-bg" id="coverParticles"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:1000px;">
+      <div class="ai" style="--d:.1s;display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:clamp(20px,3.5vh,40px);opacity:0.75;">
+        <img src="logo_positivo (2).png" alt="Positivo" style="height:32px;width:auto;filter:brightness(0) invert(1);display:block;">
+        <span style="font-size:1rem;color:rgba(255,255,255,0.35);font-weight:300;line-height:1;">+</span>
+        <img src="logo-iscout.webp" alt="iSCOUT" style="height:32px;width:auto;display:block;opacity:0.85;">
+      </div>
+      <div class="ai" style="--d:.22s;font-family:'Bebas Neue',sans-serif;font-size:clamp(3.6rem,9.5vw,9.5rem);line-height:0.9;letter-spacing:0.05em;margin-bottom:8px;">
+        <span style="color:#ffffff;font-family:'Myriad Pro Black','Myriad Pro','Source Sans 3',sans-serif;font-weight:900;">POSITIVO </span><span style="color:#22c55e;text-shadow:0 0 70px rgba(34,197,94,0.55);font-size:0.78em;font-family:'Myriad Pro Light','Myriad Pro','Source Sans 3',sans-serif;font-weight:300;letter-spacing:0.06em;">EXPERIENCE</span>
+      </div>
+      <div class="ai" style="--d:.32s;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.32em;color:rgba(34,197,94,0.70);margin-bottom:clamp(14px,2.8vh,26px);">— by iSCOUT —</div>
+      <div class="ai" style="--d:.42s;font-size:clamp(1.2rem,2.5vw,1.6rem);color:rgba(204,224,245,0.88);line-height:1.6;max-width:640px;font-weight:300;margin-bottom:clamp(14px,2.8vh,24px);">Tecnologia brasileira para enxergar o futuro do futebol <strong style="color:#fff;font-weight:600;white-space:nowrap;">antes de todo mundo.</strong></div>
+      <div class="meta-row ai" style="--d:.52s">
+        <span class="meta-chip" style="background:rgba(56,189,248,0.08);color:rgba(56,189,248,0.75);border:1px solid rgba(56,189,248,0.18);">Infraestrutura Nacional</span>
+        <span class="meta-chip" style="background:rgba(0,96,240,0.10);color:#38bdf8;border:1px solid rgba(0,96,240,0.30);">Inteligência de Base</span>
+        <span class="meta-chip" style="background:rgba(0,96,240,0.10);color:#38bdf8;border:1px solid rgba(0,96,240,0.30);">Go-to-market: Agosto 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 — O PROBLEMA ─────────────────────────────────────── -->
+  <div class="slide" data-accent="#38bdf8" data-section="O PROBLEMA">
+    <img class="hero-bg" src="assets/01-hero-stadium.webp" alt="Estádio de futebol" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.96) 0%,rgba(4,9,26,0.93) 50%,rgba(4,9,26,0.99) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:860px;">
+      <div class="kicker ai" style="--d:.05s">O Cenário Atual</div>
+      <h2 class="headline ai wide" style="--d:.15s;font-size:clamp(1.7rem,3.8vw,3rem);">O Brasil revela talentos sem <span class="accent">previsibilidade</span> e consistência.</h2>
+      <div class="card glow ai" style="--d:.28s;text-align:left;">
+        <div style="font-size:1.12rem;color:var(--text);line-height:1.8;">
+          O futebol brasileiro produz talento em todos os cantos do país: em clubes, escolas, escolinhas, projetos sociais, campos de bairro e comunidades.<br><br>
+          Mas grande parte desse potencial ainda nasce e evolui <strong style="color:var(--bright)">sem registro, sem histórico, sem métrica, sem visibilidade</strong> e sem uma ponte clara entre atleta, família, clube, escola e oportunidade.
+        </div>
+      </div>
+      <div class="grid-4 ai" style="--d:.42s;max-width:880px;margin-top:14px;">
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:0.88rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(204,224,245,0.72);">O talento existe.</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:0.88rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(204,224,245,0.72);">A paixão existe.</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:0.88rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(204,224,245,0.72);">A base existe.</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <div style="font-size:0.88rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(204,224,245,0.72);">A cultura existe.</div>
+        </div>
+      </div>
+      <div class="card ai" style="--d:.58s;margin-top:12px;padding:16px 26px;text-align:center;background:rgba(0,96,240,0.07);border-color:rgba(0,96,240,0.22);">
+        <div style="font-size:clamp(1rem,2.4vw,1.4rem);font-weight:800;color:var(--bright);line-height:1.35;">O que falta é uma <span style="color:#38bdf8;">infraestrutura de inteligência</span> capaz de transformar esse potencial em jornada previsível, desenvolvimento consistente e oportunidade real.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01b — A GRANDE OPORTUNIDADE ──────────────────────────── -->
+  <div class="slide" data-accent="#22c55e" data-section="A OPORTUNIDADE">
+    <img class="hero-bg" src="assets/05-split-recording.webp" alt="Câmera registrando treino de futebol" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.91) 0%,rgba(4,9,26,0.84) 50%,rgba(4,9,26,0.97) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:900px;">
+      <div class="kicker ai" style="--d:.05s">A Grande Oportunidade</div>
+      <h2 class="headline ai wide" style="--d:.15s;font-size:clamp(1.5rem,3.2vw,2.6rem);">Quem vai construir a <span class="accent">inteligência</span> para enxergar o futuro do talento brasileiro?</h2>
+      <div class="grid-2 ai" style="--d:.28s;max-width:860px;margin-bottom:12px;">
+        <div class="card" style="text-align:left;border-color:rgba(56,189,248,0.28);background:rgba(56,189,248,0.05);">
+          <img src="logo-iscout.webp" alt="iSCOUT" style="height:48px;width:auto;display:block;margin-bottom:12px;">
+          <div style="font-size:1.05rem;color:var(--text);line-height:1.7;">Tem a plataforma. Tecnologia proprietária de visão, dados e inteligência para o futebol de base.</div>
+        </div>
+        <div class="card" style="text-align:left;border-color:rgba(0,96,240,0.28);background:rgba(0,96,240,0.05);">
+          <img src="logo_positivo (2).png" alt="Positivo" style="height:40px;width:auto;display:block;filter:brightness(0) invert(1);opacity:0.85;margin-bottom:12px;">
+          <div style="font-size:1.05rem;color:var(--text);line-height:1.7;">Tem a reputação, a infraestrutura e a credibilidade para transformar essa plataforma em uma rede nacional.</div>
+        </div>
+      </div>
+      <div class="card ai" style="--d:.40s;text-align:left;border-color:rgba(34,197,94,0.28);background:rgba(34,197,94,0.05);margin-bottom:12px;">
+        <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.18em;color:#22c55e;margin-bottom:8px;">O Giro de Perspectiva</div>
+        <div style="font-size:1.05rem;color:var(--text);line-height:1.75;">As câmeras são usadas quase 100% para olhar algo que já aconteceu — o passado. Nesta oportunidade, as câmeras serão <strong style="color:var(--bright)">ferramentas preditivas</strong> e, pela primeira vez, vão <strong style="color:#22c55e;">olhar o futuro.</strong></div>
+      </div>
+      <div class="card glow ai" style="--d:.54s;padding:16px 26px;text-align:center;border-color:rgba(34,197,94,0.28);background:rgba(34,197,94,0.055);">
+        <div style="font-size:clamp(0.95rem,1.9vw,1.2rem);font-weight:800;color:var(--bright);line-height:1.4;">Juntas, as duas podem ajudar o Brasil a recuperar não só a liderança na formação de talentos, mas a <span style="color:#22c55e;">liderança na inteligência sobre a formação de talentos.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 — A NOVA LIDERANÇA ─────────────────────────────── -->
+  <div class="slide" data-accent="#0060f0" data-section="A NOVA LIDERANÇA">
+    <img class="hero-bg" src="assets/02-floating-athlete.webp" alt="Jovem atleta comemorando" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to right,rgba(4,9,26,0.97) 0%,rgba(4,9,26,0.90) 52%,rgba(4,9,26,0.55) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;gap:clamp(28px,5vw,64px);align-items:center;width:100%;max-width:1060px;">
+      <div style="flex:0 0 40%;display:flex;flex-direction:column;min-width:0;">
+        <div class="kicker ai" style="--d:.05s">A Virada de Chave</div>
+        <h2 class="headline ai" style="--d:.12s;font-size:clamp(1.6rem,3.3vw,2.7rem);max-width:100%;text-wrap:unset;">A nova liderança do futebol passa pela <span class="accent">inteligência da base.</span></h2>
+        <div class="subline ai" style="--d:.20s;text-align:left;max-width:100%;font-size:clamp(0.92rem,1.65vw,1.08rem);margin-bottom:18px;">Durante décadas, o Brasil revelou talentos pelo feeling. A próxima vantagem competitiva será construída com dados, tecnologia e acesso.</div>
+        <div class="card glow ai" style="--d:.30s;padding:15px 18px;border-color:rgba(0,96,240,0.35);">
+          <div style="font-size:clamp(0.84rem,1.4vw,0.97rem);font-weight:800;color:var(--bright);line-height:1.5;">Liderar a formação de talentos nessa nova era significa <span style="color:#38bdf8;">transformar potencial em inteligência de desenvolvimento e oportunidades comerciais.</span></div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;">
+        <div class="ai" style="--d:.28s;display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #38bdf8;border-radius:10px;padding:13px 16px;">
+          <div style="width:2.3rem;height:2.3rem;border-radius:50%;background:rgba(56,189,248,0.14);display:flex;align-items:center;justify-content:center;color:#38bdf8;flex-shrink:0;">
+            <svg class="ico" style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#i-eye"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.96rem;font-weight:700;color:var(--bright);margin-bottom:3px;line-height:1.3;">Enxergar atletas mais cedo.</div>
+            <div style="font-size:0.86rem;color:var(--text);line-height:1.55;">Identificar talentos antes da concorrência, com dados que substituem o feeling.</div>
+          </div>
+        </div>
+        <div class="ai" style="--d:.35s;display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #38bdf8;border-radius:10px;padding:13px 16px;">
+          <div style="width:2.3rem;height:2.3rem;border-radius:50%;background:rgba(56,189,248,0.14);display:flex;align-items:center;justify-content:center;color:#38bdf8;flex-shrink:0;">
+            <svg class="ico" style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#i-bar-chart"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.96rem;font-weight:700;color:var(--bright);margin-bottom:3px;line-height:1.3;">Acompanhar evolução com precisão.</div>
+            <div style="font-size:0.86rem;color:var(--text);line-height:1.55;">Dados contínuos tornam o desenvolvimento mensurável e orientado por evidências.</div>
+          </div>
+        </div>
+        <div class="ai" style="--d:.42s;display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #0060f0;border-radius:10px;padding:13px 16px;">
+          <div style="width:2.3rem;height:2.3rem;border-radius:50%;background:rgba(0,96,240,0.14);display:flex;align-items:center;justify-content:center;color:#0060f0;flex-shrink:0;">
+            <svg class="ico" style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#i-users"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.96rem;font-weight:700;color:var(--bright);margin-bottom:3px;line-height:1.3;">Dar visibilidade às famílias.</div>
+            <div style="font-size:0.86rem;color:var(--text);line-height:1.55;">Pais acompanham a jornada do filho em tempo real, criando engajamento genuíno.</div>
+          </div>
+        </div>
+        <div class="ai" style="--d:.49s;display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #0060f0;border-radius:10px;padding:13px 16px;">
+          <div style="width:2.3rem;height:2.3rem;border-radius:50%;background:rgba(0,96,240,0.14);display:flex;align-items:center;justify-content:center;color:#0060f0;flex-shrink:0;">
+            <svg class="ico" style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#i-globe"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.96rem;font-weight:700;color:var(--bright);margin-bottom:3px;line-height:1.3;">Democratizar jornadas de sucesso.</div>
+            <div style="font-size:0.86rem;color:var(--text);line-height:1.55;">Atletas fora dos grandes centros ganham as mesmas oportunidades de visibilidade.</div>
+          </div>
+        </div>
+        <div class="ai" style="--d:.56s;display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #22c55e;border-radius:10px;padding:13px 16px;">
+          <div style="width:2.3rem;height:2.3rem;border-radius:50%;background:rgba(34,197,94,0.14);display:flex;align-items:center;justify-content:center;color:#22c55e;flex-shrink:0;">
+            <svg class="ico" style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#i-handshake"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.96rem;font-weight:700;color:var(--bright);margin-bottom:3px;line-height:1.3;">Apoiar clubes, escolas e escolinhas.</div>
+            <div style="font-size:0.86rem;color:var(--text);line-height:1.55;">Gestores recebem dados que transformam intuição em decisão estratégica.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 — A PLATAFORMA ──────────────────────────────────── -->
+  <div class="slide" data-accent="#38bdf8" data-section="A PLATAFORMA">
+    <div class="split-slide">
+      <div class="split-left">
+        <div class="kicker ai" style="--d:.05s">A Plataforma</div>
+        <h2 class="headline ai" style="--d:.14s;font-size:clamp(1.4rem,2.9vw,2.4rem);max-width:100%;text-wrap:unset;">O iSCOUT é a plataforma definitiva da <span class="accent">inteligência para o futebol de base.</span></h2>
+        <div class="ai" style="--d:.19s;font-size:clamp(0.9rem,1.55vw,1.05rem);color:#22c55e;font-weight:600;line-height:1.55;margin-bottom:10px;">iSCOUT conecta campo, câmeras, IA proprietária, app, dados, família, clube e escolinhas em uma única jornada.</div>
+        <div class="subline ai" style="--d:.25s;text-align:left;max-width:100%;font-size:clamp(0.88rem,1.5vw,1rem);margin-bottom:10px;">O que antes dependia apenas do olhar de quem estava à beira do campo passa a ser registrado, analisado e transformado em decisão informada para todos os envolvidos no desenvolvimento do atleta.</div>
+        <div class="ai" style="--d:.32s;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+          <div style="font-size:0.73rem;font-weight:800;text-transform:uppercase;letter-spacing:0.18em;color:var(--slide-accent);margin-bottom:8px;">A plataforma permite</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;">
+            <div class="metric-item ai" style="--d:.38s">Acompanhar evolução esportiva.</div>
+            <div class="metric-item ai" style="--d:.44s">Gerar relatórios e insights.</div>
+            <div class="metric-item ai" style="--d:.50s">Criar histórico de desenvolvimento.</div>
+            <div class="metric-item ai" style="--d:.56s">Apoiar clubes, escolas e atletas com dados.</div>
+            <div class="metric-item ai" style="--d:.62s">Identificar padrões de performance.</div>
+            <div class="metric-item ai" style="--d:.68s">Dar visibilidade a atletas fora dos grandes centros.</div>
+            <div class="metric-item ai" style="--d:.74s;grid-column:1/-1;">Construir uma base nacional de inteligência esportiva.</div>
+          </div>
+        </div>
+      </div>
+      <div class="split-right ai" style="--d:.42s">
+        <img class="split-img" src="Positivo-Exp_Interna.png" alt="Sala de monitoramento Positivo Experience by iSCOUT" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- 03b — A TECNOLOGIA ─────────────────────────────────────── -->
+  <div class="slide" data-accent="#38bdf8" data-section="A TECNOLOGIA">
+    <div class="split-slide" style="max-width:1100px;">
+      <div class="split-left">
+        <div class="kicker ai" style="--d:.05s">A Tecnologia que Torna o Impacto Mensurável</div>
+        <h2 class="headline ai" style="--d:.14s;font-size:clamp(1.3rem,2.8vw,2.3rem);max-width:100%;text-wrap:unset;">Impacto com inteligência,<br><span class="accent">mensuração e escala.</span></h2>
+        <div class="subline ai" style="--d:.20s;text-align:left;max-width:100%;font-size:clamp(0.95rem,1.7vw,1.1rem);margin-bottom:12px;">O iSCOUT conecta câmeras, visão 3D, IA proprietária, app e dashboard para transformar treinos e jogos em dados, vídeos, perfis, relatórios e visibilidade.</div>
+        <div class="steps ai" style="--d:.28s;max-width:100%;">
+          <div class="step">
+            <div class="step-num" style="border-color:#38bdf8;color:#38bdf8;">1</div>
+            <div>
+              <div class="step-title"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg> Captura</div>
+              <div class="step-desc">4 câmeras registram <strong>84 tipos de movimento</strong> em treinos, jogos, desafios e torneios.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="border-color:#38bdf8;color:#38bdf8;">2</div>
+            <div>
+              <div class="step-title"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg> Visão 3D</div>
+              <div class="step-desc">Aplicada em contexto, <strong>sem pontos cegos</strong>, capturando comportamento com e sem bola.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="border-color:#38bdf8;color:#38bdf8;">3</div>
+            <div>
+              <div class="step-title"><svg class="ico" aria-hidden="true"><use href="#i-brain"/></svg> IA Proprietária</div>
+              <div class="step-desc">Identifica padrões baseados em <strong>cinco dimensões</strong>: técnica, tática, física, resiliência e potencial, e traça evolução contínua para análises precisas.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="border-color:#38bdf8;color:#38bdf8;">4</div>
+            <div>
+              <div class="step-title"><svg class="ico" aria-hidden="true"><use href="#i-smartphone"/></svg> Aplicativo + Dashboard</div>
+              <div class="step-desc">Atletas, famílias, equipe técnica e marca acessam perfis, consomem e sobem vídeos, relatórios e indicadores.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-right ai" style="--d:.40s">
+        <img class="split-img" src="slide_tecnologia.webp" alt="Câmera iSCOUT em campo" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 — POSITIVO × iSCOUT ─────────────────────────────── -->
+  <div class="slide" data-accent="#0060f0" data-section="POSITIVO × iSCOUT">
+    <img class="hero-bg" src="assets/01-hero-stadium.webp" alt="Estádio de futebol — escala nacional" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.90) 0%,rgba(4,9,26,0.82) 50%,rgba(4,9,26,0.96) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:920px;">
+      <div class="kicker ai" style="--d:.05s">A Parceria</div>
+      <h2 class="headline ai wide" style="--d:.14s;font-size:clamp(1.4rem,3vw,2.5rem);">Positivo: reputação e infraestrutura para <span class="accent">atender rede nacional.</span></h2>
+      <div class="subline ai" style="--d:.22s;margin-bottom:16px;">Para uma solução chegar ao futebol de base brasileiro em escala, além de tecnologia é preciso confiança. Confiança das famílias, dos clubes, das escolas, do mercado.</div>
+      <div class="ai" style="--d:.26s;display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px;opacity:0.72;">
+        <img src="logo-iscout.webp" alt="iSCOUT" style="height:30px;width:auto;display:block;">
+        <span style="color:rgba(255,255,255,0.35);font-size:1rem;font-weight:300;line-height:1;">+</span>
+        <img src="logo_positivo (2).png" alt="Positivo" style="height:24px;width:auto;filter:brightness(0) invert(1);display:block;opacity:0.90;">
+      </div>
+      <div class="role-wrap ai" style="--d:.32s;">
+        <div class="role-col iscout">
+          <div class="role-label" style="color:#38bdf8;">iSCOUT · Plataforma e Inteligência</div>
+          <div class="role-item"><div class="role-dot" style="background:#38bdf8;"></div>Plataforma de Inteligência Esportiva.</div>
+          <div class="role-item"><div class="role-dot" style="background:#38bdf8;"></div>IA proprietária aplicada ao jogo.</div>
+          <div class="role-item"><div class="role-dot" style="background:#38bdf8;"></div>Jornada do atleta.</div>
+          <div class="role-item"><div class="role-dot" style="background:#38bdf8;"></div>Experiência das famílias.</div>
+          <div class="role-item"><div class="role-dot" style="background:#38bdf8;"></div>Relação com clubes, escolas e escolinhas.</div>
+        </div>
+        <div class="role-divider">+</div>
+        <div class="role-col positivo">
+          <div class="role-label" style="color:#0060f0;">Positivo · Infraestrutura e Marca</div>
+          <div class="role-item"><div class="role-dot"></div>Infraestrutura de captura de imagens.</div>
+          <div class="role-item"><div class="role-dot"></div>Hardware e câmeras.</div>
+          <div class="role-item"><div class="role-dot"></div>Edge e conectividade.</div>
+          <div class="role-item"><div class="role-dot"></div>Credibilidade tecnológica B2B.</div>
+          <div class="role-item"><div class="role-dot"></div>Marca brasileira de confiança.</div>
+          <div class="role-item"><div class="role-dot"></div>Força institucional e capilaridade.</div>
+          <div class="role-item"><div class="role-dot"></div>Poder de instalação e manutenção nacional.</div>
+          <div class="role-item"><div class="role-dot"></div>Confiança dos parceiros.</div>
+        </div>
+      </div>
+      <div class="card glow ai" style="--d:.50s;margin-top:14px;padding:15px 26px;text-align:center;border-color:rgba(0,96,240,0.28);background:rgba(0,96,240,0.06);">
+        <div style="font-size:clamp(0.92rem,1.85vw,1.15rem);font-weight:800;color:var(--bright);line-height:1.4;">Juntas, as duas podem construir a primeira infraestrutura nacional de<br><span style="color:#38bdf8;">inteligência de base</span> do futebol brasileiro.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 — ESPORTE & ENTRETENIMENTO ──────────────────────── -->
+  <div class="slide" data-accent="#22c55e" data-section="ESPORTE & ENTRETENIMENTO">
+    <img class="hero-bg" src="assets/06-hero-kids-running.webp" alt="Crianças jogando futebol" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.93) 0%,rgba(4,9,26,0.87) 50%,rgba(4,9,26,0.98) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:900px;">
+      <div class="kicker ai" style="--d:.05s">Nova Categoria de Mercado</div>
+      <h2 class="headline ai wide" style="--d:.14s;font-size:clamp(1.4rem,3vw,2.5rem);">Esporte & Entretenimento: investimento em <span class="accent">novas categorias de mercado.</span></h2>
+      <div class="subline ai" style="--d:.22s;margin-bottom:14px;">Esta parceria permite a inovação que pode mudar a forma como o esporte de base é visto, acompanhado e desenvolvido, iniciando pela modalidade futebol.</div>
+      <div class="compare-grid ai" style="--d:.32s;max-width:860px;">
+        <div class="compare-col old">
+          <div class="compare-label neg">Patrocínio Tradicional</div>
+          <div class="compare-item"><span class="ci" style="color:rgba(220,80,80,0.72);">✗</span> Visibilidade pontual</div>
+          <div class="compare-item"><span class="ci" style="color:rgba(220,80,80,0.72);">✗</span> Logo em uniforme ou placa</div>
+          <div class="compare-item"><span class="ci" style="color:rgba(220,80,80,0.72);">✗</span> Campanha com prazo de validade</div>
+          <div class="compare-item"><span class="ci" style="color:rgba(220,80,80,0.72);">✗</span> Baixa conexão com produto</div>
+          <div class="compare-item"><span class="ci" style="color:rgba(220,80,80,0.72);">✗</span> Impacto difícil de medir</div>
+        </div>
+        <div class="compare-col new">
+          <div class="compare-label pos" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;">
+            <img src="logo-iscout.webp" alt="iSCOUT" style="height:20px;width:auto;display:block;filter:brightness(1.1);">
+            <span style="color:#22c55e;font-weight:800;font-size:1.1rem;line-height:1;">+</span>
+            <img src="logo_positivo (2).png" alt="Positivo" style="height:16px;width:auto;filter:brightness(0) invert(1);display:block;opacity:0.92;">
+          </div>
+          <div class="compare-item"><span class="ci" style="color:#22c55e;">✓</span> Tecnologia instalada em campo</div>
+          <div class="compare-item"><span class="ci" style="color:#22c55e;">✓</span> Uso real 365 dias por ano</div>
+          <div class="compare-item"><span class="ci" style="color:#22c55e;">✓</span> Marca integrada à jornada do atleta e famílias</div>
+          <div class="compare-item"><span class="ci" style="color:#22c55e;">✓</span> Dados agregados e recorrentes</div>
+          <div class="compare-item"><span class="ci" style="color:#22c55e;">✓</span> Conteúdo, PR, B2B e impacto mensurável</div>
+        </div>
+      </div>
+      <div class="card glow ai" style="--d:.50s;margin-top:12px;padding:15px 26px;text-align:center;border-color:rgba(34,197,94,0.28);background:rgba(34,197,94,0.055);">
+        <div style="font-size:clamp(0.88rem,1.7vw,1.08rem);font-weight:600;color:var(--text);line-height:1.6;">Mas isso não vem sozinho. Quando falamos de esportes e futebol no Brasil, invariavelmente, também estamos falando de <strong style="color:var(--bright);">lifestyle, cultura</strong> e de todo um ecossistema de oportunidades comerciais para marcas percolarem produtos e serviços para <span style="color:#22c55e;">novas bases qualificadas de consumidores.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 — ATIBAIA ───────────────────────────────────────── -->
+  <div class="slide" data-accent="#0060f0" data-section="ATIBAIA · HUB">
+    <img class="hero-bg" src="Positivo-Exp_Externa.png" alt="Hub Positivo Experience by iSCOUT em Atibaia" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to right,rgba(4,9,26,0.96) 0%,rgba(4,9,26,0.88) 55%,rgba(4,9,26,0.55) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;width:100%;max-width:1040px;">
+      <div class="kicker ai" style="--d:.05s">Onde Começa</div>
+      <h2 class="headline ai" style="--d:.14s;text-align:left;font-size:clamp(2rem,4.5vw,4rem);max-width:100%;text-wrap:unset;">ATIBAIA, <span class="accent">SP</span></h2>
+      <div class="subline ai" style="--d:.22s;text-align:left;max-width:54ch;margin-bottom:16px;font-size:clamp(1.15rem,2.1vw,1.4rem);">Atibaia pode se tornar o primeiro Hub Positivo Experience by iSCOUT: um ambiente onde tecnologia, futebol de base, famílias, dados, conteúdo e showroom B2B acontecem ao mesmo tempo.</div>
+      <div class="hub-grid ai" style="--d:.32s;max-width:560px;">
+        <div class="hub-item"><div class="hub-val">8</div><div class="hub-label">campos ativos</div></div>
+        <div class="hub-item"><div class="hub-val">32</div><div class="hub-label">câmeras instaladas</div></div>
+        <div class="hub-item"><div class="hub-val">2.800</div><div class="hub-label">atletas em potencial</div></div>
+        <div class="hub-item"><div class="hub-val">65km</div><div class="hub-label">de São Paulo</div></div>
+        <div class="hub-item"><div class="hub-val">360°</div><div class="hub-label">sala de monitoramento ao vivo</div></div>
+        <div class="hub-item"><div class="hub-val">B2B</div><div class="hub-label">demo room para clientes e parceiros</div></div>
+      </div>
+      <div class="card glow ai" style="--d:.50s;margin-top:12px;max-width:560px;border-color:rgba(0,96,240,0.30);background:rgba(0,96,240,0.06);">
+        <div style="font-size:1.05rem;color:var(--text);line-height:1.75;">Relatórios para usuários · Produção contínua de conteúdo · Visitas de clientes, imprensa, investidores, clubes e escolas · <strong style="color:var(--bright)">Copa iSCOUT Atibaia.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 — PROVAR E MEDIR ─────────────────────────────────── -->
+  <div class="slide" data-accent="#38bdf8" data-section="PROVAR E MEDIR">
+    <img class="hero-bg" src="assets/04-hero-phone.webp" alt="Scout monitorando campo com celular" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.93) 0%,rgba(4,9,26,0.85) 40%,rgba(4,9,26,0.97) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:980px;">
+      <div class="kicker ai" style="--d:.05s">Antes de Escalar</div>
+      <h2 class="headline ai wide" style="--d:.14s;font-size:clamp(1.5rem,3.2vw,2.7rem);"><span class="accent">Provar e medir.</span></h2>
+      <div class="card ai" style="--d:.22s;padding:14px 22px;text-align:center;border-color:rgba(56,189,248,0.20);background:rgba(56,189,248,0.04);margin-bottom:10px;">
+        <div style="font-size:clamp(0.88rem,1.6vw,1.05rem);color:var(--text);line-height:1.65;">O Hub Positivo Experience by iSCOUT será desenhado para validar tecnologia, produto, operação, conteúdo, engajamento familiar, valor para clubes/escolas e potencial B2B.</div>
+      </div>
+      <div class="ai" style="--d:.28s;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.18em;color:var(--slide-accent);margin-bottom:8px;align-self:flex-start;">O que será medido</div>
+      <div class="grid-4 ai" style="--d:.34s;max-width:980px;">
+        <div class="metric-group" style="border-top:2px solid #38bdf8;">
+          <div class="metric-group-title" style="color:#38bdf8;">Tecnologia</div>
+          <div class="metric-item">Uptime das câmeras.</div>
+          <div class="metric-item">Jogos e treinos capturados.</div>
+          <div class="metric-item">Qualidade dos dados.</div>
+          <div class="metric-item">Custo operacional por campo.</div>
+        </div>
+        <div class="metric-group" style="border-top:2px solid #0060f0;">
+          <div class="metric-group-title" style="color:#0060f0;">Comunidade</div>
+          <div class="metric-item">Atletas, Pais e Responsáveis cadastrados.</div>
+          <div class="metric-item">Famílias engajadas.</div>
+          <div class="metric-item">Uso do app.</div>
+          <div class="metric-item">Relatórios entregues.</div>
+          <div class="metric-item">Satisfação de clubes e escolas.</div>
+        </div>
+        <div class="metric-group" style="border-top:2px solid #22c55e;">
+          <div class="metric-group-title" style="color:#22c55e;">Marca e Conteúdo</div>
+          <div class="metric-item">Histórias captadas.</div>
+          <div class="metric-item">Depoimentos de famílias e atletas.</div>
+          <div class="metric-item">Conteúdos produzidos.</div>
+          <div class="metric-item">Potencial de PR e mídia espontânea.</div>
+          <div class="metric-item">Ótica positiva de marca na região.</div>
+        </div>
+        <div class="metric-group" style="border-top:2px solid #f59e0b;">
+          <div class="metric-group-title" style="color:#f59e0b;">Negócio</div>
+          <div class="metric-item">Visitas B2B realizadas.</div>
+          <div class="metric-item">Leads gerados.</div>
+          <div class="metric-item">Interesse de clubes, escolas e parceiros.</div>
+          <div class="metric-item">Critérios para expansão regional.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 — EXPANSÃO ──────────────────────────────────────── -->
+  <div class="slide" data-accent="#0060f0" data-section="EXPANSÃO NACIONAL">
+    <img class="hero-bg" src="assets/07-hero-action-close.webp" alt="Jogador em ação" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.88) 0%,rgba(4,9,26,0.78) 50%,rgba(4,9,26,0.97) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:1000px;">
+      <div class="kicker ai" style="--d:.05s">A Jornada de Crescimento</div>
+      <h2 class="headline ai wide" style="--d:.14s;font-size:clamp(1.4rem,3vw,2.5rem);">Do hub em Atibaia à <span class="accent">rede nacional</span> de inteligência de talentos.</h2>
+      <div class="subline ai" style="--d:.22s;margin-bottom:16px;">A ambição é nacional, mas a entrada deve ser progressiva, mensurável e planejada. A parceria começa em Atibaia e escala para uma rede de campos conectados em todo o Brasil.</div>
+      <div class="phase-grid">
+        <div class="phase-card ai" style="--d:.32s;border-top:3px solid #38bdf8;">
+          <div class="phase-num" style="color:#38bdf8;">Fase 1 · POC</div>
+          <div class="phase-title">Hub Atibaia</div>
+          <div class="phase-item">8 campos ativos</div>
+          <div class="phase-item">32 câmeras instaladas</div>
+          <div class="phase-item">Copa iSCOUT Atibaia</div>
+          <div class="phase-item">90–120 dias de validação</div>
+          <div class="phase-item">Tecnologia, conteúdo, B2B e governança</div>
+        </div>
+        <div class="phase-card ai" style="--d:.46s;border-top:3px solid #0060f0;">
+          <div class="phase-num" style="color:#0060f0;">Fase 2 · Regional</div>
+          <div class="phase-title">Expansão Regional</div>
+          <div class="phase-item">Primeiros campos estratégicos</div>
+          <div class="phase-item">Clubes, escolas e escolinhas prioritárias</div>
+          <div class="phase-item">Cidades mapeadas por região para instalação e operação.</div>
+          <div class="phase-item">Campeonatos iSCOUT nos Estados</div>
+          <div class="phase-item">Métricas reais para tomada de decisão</div>
+        </div>
+        <div class="phase-card ai" style="--d:.60s;border-top:3px solid #22c55e;">
+          <div class="phase-num" style="color:#22c55e;">Fase 3 · Nacional</div>
+          <div class="phase-title">Rede Nacional</div>
+          <div class="phase-item">100 campos conectados</div>
+          <div class="phase-item">400 câmeras instaladas</div>
+          <div class="phase-item">35k+ atletas impactados.</div>
+          <div class="phase-item">Copa Brasil iSCOUT</div>
+          <div class="phase-item">Hub nacional de inteligência de base</div>
+        </div>
+      </div>
+      <div class="card glow ai" style="--d:.76s;margin-top:14px;padding:14px 26px;text-align:center;border-color:rgba(0,96,240,0.28);background:rgba(0,96,240,0.055);">
+        <div style="font-size:clamp(1.05rem,1.95vw,1.28rem);color:var(--text);line-height:1.65;">A parceria pode começar em Atibaia, reunir aprendizados estratégicos e escalar para uma rede capaz de transformar a base brasileira em um <strong style="color:#38bdf8;">mapa nacional de talentos.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 — FLYWHEEL ──────────────────────────────────────── -->
+  <div class="slide" data-accent="#38bdf8" data-section="O FLYWHEEL">
+    <img class="hero-bg" src="assets/03-split-father.webp" alt="Pai acompanhando filho no futebol" loading="lazy">
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.88) 0%,rgba(4,9,26,0.80) 50%,rgba(4,9,26,0.96) 100%)"></div>
+    <div class="slide-inner-row" style="position:relative;z-index:1;display:flex;gap:clamp(22px,4vw,60px);align-items:center;width:100%;max-width:1020px;">
+      <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+        <div class="kicker ai" style="--d:.05s">O Motor de Negócio</div>
+        <h2 class="headline ai" style="--d:.14s;text-align:left;font-size:clamp(1.4rem,3vw,2.4rem);max-width:100%;text-wrap:unset;">Como campo vira inteligência, conteúdo,<br><span class="accent">relacionamento e liderança.</span></h2>
+        <div class="ai" style="--d:.24s;background:rgba(56,189,248,0.05);border:1px solid rgba(56,189,248,0.14);border-radius:10px;padding:16px 18px;font-size:1.05rem;color:var(--text);line-height:1.75;margin-bottom:16px;">
+          Cada campo instalado se torna um ponto de captura.<br>
+          Cada treino capturado se torna dados.<br>
+          Cada relatório se torna relacionamento.<br>
+          Cada família engajada se torna comunidade.<br>
+          Cada história contada se torna conteúdo.<br>
+          Cada região mapeada se torna <strong style="color:var(--bright)">inteligência nacional.</strong>
+        </div>
+        <div class="card ai" style="--d:.38s;padding:14px 18px;border-color:rgba(0,96,240,0.22);background:rgba(0,96,240,0.055);">
+          <div style="font-size:1.0rem;font-weight:700;color:var(--bright);line-height:1.5;">Inventário premium para marcas · Bolsas e impacto ESG · Liderança brasileira em inteligência de talentos.</div>
+          <div style="font-size:0.88rem;color:var(--text);line-height:1.55;margin-top:8px;border-top:1px solid rgba(255,255,255,0.07);padding-top:8px;">Cada jovem acompanhado fortalece a <span style="color:#22c55e;font-weight:600;">liderança do Brasil na formação de talentos.</span></div>
+        </div>
+      </div>
+      <div class="flywheel-col" style="flex:0 0 clamp(210px,26vw,320px);">
+        <div class="flywheel ai" style="--d:.30s;">
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-map-pin"/></svg></div><div class="fly-text">Campo instalado</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg></div><div class="fly-text">Dados capturados</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-bar-chart"/></svg></div><div class="fly-text">Relatórios para usuários</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-sparkles"/></svg></div><div class="fly-text">Histórias reais · Conteúdo</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-handshake"/></svg></div><div class="fly-text">Visitas B2B · Patrocinadores atraídos</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-sprout"/></svg></div><div class="fly-text">Bolsas e impacto ESG</div></div>
+          <div class="fly-arrow">↓</div>
+          <div class="fly-step" style="border-color:rgba(56,189,248,0.32);background:rgba(56,189,248,0.07);"><div class="fly-icon" style="color:#38bdf8;"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></div><div class="fly-text" style="color:#38bdf8;font-weight:700;">Expansão nacional</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 — BENEFÍCIOS ─────────────────────────────────────── -->
+  <div class="slide" data-accent="#0060f0" data-section="BENEFÍCIOS">
+    <video class="hero-bg" src="video-fundo-slide-final.mp4" autoplay muted loop playsinline></video>
+    <div class="hero-overlay" style="background:linear-gradient(to bottom,rgba(4,9,26,0.88) 0%,rgba(4,9,26,0.82) 50%,rgba(4,9,26,0.96) 100%)"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;width:100%;max-width:1040px;">
+      <div class="kicker ai" style="--d:.05s">O que a Positivo Capitaliza</div>
+      <h2 class="headline ai" style="--d:.12s;text-align:left;font-size:clamp(1.2rem,2.5vw,2rem);max-width:100%;text-wrap:unset;margin-bottom:10px;">Benefícios que a Positivo pode capitalizar com o <span style="color:#22c55e;">iSCOUT.</span></h2>
+      <div class="ai" style="--d:.19s;font-size:clamp(0.88rem,1.55vw,1.02rem);color:var(--text);line-height:1.65;margin-bottom:16px;border-left:3px solid #22c55e;padding-left:14px;">A parceria cria uma plataforma de valor para Positivo lançar o conceito <strong style="color:var(--bright);">POSITIVO EXPERIENCE</strong> para sua divisão de câmeras, alavancando sua marca nas seguintes frentes estratégicas:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;">
+        <div class="benefit-list ai" style="--d:.28s;">
+          <div class="benefit-card">
+            <div class="benefit-num">1</div>
+            <div>
+              <div class="benefit-title">Liderança de Categoria</div>
+              <div class="benefit-desc">Ser a marca brasileira de tecnologia por trás de uma nova infraestrutura de inteligência para o futebol de base.</div>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-num">2</div>
+            <div>
+              <div class="benefit-title">Reputação Nacional</div>
+              <div class="benefit-desc">Associar Positivo a desenvolvimento de jovens, esporte, entretenimento, tecnologia, inclusão e futuro.</div>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-num">3</div>
+            <div>
+              <div class="benefit-title">Conteúdo proprietário</div>
+              <div class="benefit-desc">Gerar histórias de atletas, famílias, futebol feminino, evolução esportiva, bastidores de tecnologia e descoberta de talentos.</div>
+            </div>
+          </div>
+        </div>
+        <div class="benefit-list ai" style="--d:.40s;">
+          <div class="benefit-card">
+            <div class="benefit-num">4</div>
+            <div>
+              <div class="benefit-title">Plataforma B2B</div>
+              <div class="benefit-desc">Receber clientes, parceiros, escolas, clubes, investidores e lideranças em um ambiente real de demonstração tecnológica.</div>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-num">5</div>
+            <div>
+              <div class="benefit-title">ESG Mensurável</div>
+              <div class="benefit-desc">Ativar bolsas, meninas no esporte, acesso à tecnologia, desenvolvimento de jovens e impacto mensurável na base.</div>
+            </div>
+          </div>
+          <div class="benefit-card" style="border-color:rgba(0,96,240,0.28);background:rgba(0,96,240,0.055);">
+            <div class="benefit-num" style="border-color:#38bdf8;color:#38bdf8;">6</div>
+            <div>
+              <div class="benefit-title" style="color:#38bdf8;">Produto em Uso Real</div>
+              <div class="benefit-desc">Demonstrar câmeras, edge, conectividade e infraestrutura tecnológica em ambiente de alta visibilidade e uso contínuo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<button class="nav-arrow nav-prev disabled" id="navPrev" onclick="go(-1)" aria-label="Slide anterior">‹</button>
+<button class="nav-arrow nav-next" id="navNext" onclick="go(1)" aria-label="Próximo slide">›</button>
+<div class="progress-bar" role="progressbar" aria-label="Progresso da apresentação" aria-valuemin="1" aria-valuenow="1"><div class="progress-fill" id="prog"></div></div>
+<div class="dots" id="dots"></div>
+
+<script>
+const slides  = document.querySelectorAll('.slide');
+const dotsEl  = document.getElementById('dots');
+const progEl  = document.getElementById('prog');
+const curEl   = document.getElementById('cur');
+const totEl   = document.getElementById('tot');
+const prevBtn = document.getElementById('navPrev');
+const nextBtn = document.getElementById('navNext');
+const secTag  = document.getElementById('sectag');
+const orbA    = document.querySelector('.orb-a');
+const orbB    = document.querySelector('.orb-b');
+const progBar = progEl.parentElement;
+
+const TOTAL = slides.length;
+totEl.textContent = String(TOTAL).padStart(2, '0');
+progBar.setAttribute('aria-valuemax', String(TOTAL));
+let current = 0;
+
+slides.forEach((slide, i) => {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.title = slide.dataset.section || `Slide ${i + 1}`;
+  d.setAttribute('aria-label', `Ir para slide ${i + 1}${slide.dataset.section ? ': ' + slide.dataset.section : ''}`);
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function applyAccent(slide) {
+  const hex = slide.dataset.accent || '#0060f0';
+  document.documentElement.style.setProperty('--slide-accent', hex);
+  orbA.style.background = `radial-gradient(circle, ${hex}, transparent 70%)`;
+  orbB.style.background = `radial-gradient(circle, ${hex}, transparent 70%)`;
+  secTag.textContent = slide.dataset.section || '';
+}
+
+function animateItems(slide) {
+  slide.querySelectorAll('.ai').forEach(el => {
+    el.classList.remove('in');
+    const d = parseFloat(el.style.getPropertyValue('--d') || '0') * 1000;
+    setTimeout(() => el.classList.add('in'), d + 80);
+  });
+}
+
+function updateUI() {
+  curEl.textContent = String(current + 1).padStart(2, '0');
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    const active = i === current;
+    d.classList.toggle('active', active);
+    d.setAttribute('aria-current', active ? 'true' : 'false');
+  });
+  progEl.style.width = (TOTAL > 1 ? (current / (TOTAL - 1)) * 100 : 100) + '%';
+  progBar.setAttribute('aria-valuenow', String(current + 1));
+  progBar.setAttribute('aria-valuetext', `Slide ${current + 1} de ${TOTAL}`);
+  prevBtn.classList.toggle('disabled', current === 0);
+  nextBtn.classList.toggle('disabled', current === TOTAL - 1);
+}
+
+function createParticles() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const container = document.getElementById('coverParticles');
+  if (!container) return;
+  const colors = ['#0060f0','#38bdf8','#0099cc','#22c55e','rgba(56,189,248,0.5)'];
+  for (let i = 0; i < 26; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 2.8 + 0.8;
+    p.style.cssText = [
+      `left:${(Math.random()*100).toFixed(1)}%`,
+      `width:${size.toFixed(1)}px`,
+      `height:${size.toFixed(1)}px`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `animation-duration:${(Math.random()*10+8).toFixed(1)}s`,
+      `animation-delay:-${(Math.random()*12).toFixed(1)}s`,
+      `opacity:${(Math.random()*0.3+0.07).toFixed(2)}`,
+    ].join(';');
+    container.appendChild(p);
+  }
+}
+
+function goTo(n) {
+  if (n < 0 || n >= TOTAL || n === current) return;
+  const prev = slides[current];
+  prev.classList.add('exit');
+  prev.classList.remove('active');
+  setTimeout(() => prev.classList.remove('exit'), 350);
+  current = n;
+  const curr = slides[current];
+  curr.classList.add('active');
+  applyAccent(curr);
+  animateItems(curr);
+  updateUI();
+}
+
+function go(dir) { goTo(current + dir); }
+
+applyAccent(slides[0]);
+animateItems(slides[0]);
+updateUI();
+createParticles();
+
+new MutationObserver(() => {
+  const c = getComputedStyle(document.documentElement).getPropertyValue('--slide-accent').trim();
+  if (c) progEl.style.background = c;
+}).observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+
+document.addEventListener('keydown', e => {
+  if ([' ','ArrowRight','ArrowDown','Enter'].includes(e.key)) { e.preventDefault(); go(1); }
+  if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End')  goTo(TOTAL - 1);
+  if (e.key === 'f' || e.key === 'F') toggleFS();
+});
+
+let touchX = 0, touchY = 0;
+document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+let wheelLock = false;
+document.addEventListener('wheel', e => {
+  if (wheelLock || Math.abs(e.deltaY) < 10) return;
+  wheelLock = true;
+  go(e.deltaY > 0 ? 1 : -1);
+  setTimeout(() => wheelLock = false, 750);
+}, { passive: true });
+
+function toggleFS() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
+  else document.exitFullscreen?.();
+}
+</script>
+</body>
+</html>

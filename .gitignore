@@ -1,0 +1,27 @@
+# Briefing interno (não publicar)
+iscout_sponsor_pitch_v7_copy_only.docx
+iscout_pitch_colégios_copy_only.docx
+docx_raw.xml
+
+# Backup da versão anterior
+backup/
+
+# Claude Code session data
+.claude/projects/
+.claude/*.jsonl
+.claude/settings.local.json
+.sixth/
+
+# Node
+node_modules/
+
+# Screenshots geradas (validação interna)
+verify-screenshots/
+screenshots/
+
+# Scripts de debug
+measure-esg.js
+
+# OS
+Thumbs.db
+.DS_Store
